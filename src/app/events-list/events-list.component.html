@@ -1,0 +1,12 @@
+<h2 class="p-2 text-center"><i class="fa fa-gift" aria-hidden="true"></i> Exchanges</h2>
+<loading-spinner [loading]="loading"></loading-spinner>
+<div *ngIf="!loading" class="row">
+    <ul class="list-group w-100">
+        <a *ngFor="let event of events" 
+            class="list-group-item list-group-item-action"
+            [routerLink]="['/events', event.id]"
+        >{{event.name}}</a>
+    </ul>
+
+    <a [routerLink]="['/events', 'add-edit']" class="btn btn-success m-3"><i class="fa fa-plus" aria-hidden="true"></i> Create new gift exchange</a>
+</div>

@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    color: red;
+}
+
+a {
+    color: green;
+}
+
+h1,h2,h3,h4,h5 {
+    color: green;
+}
+
+.btn-success {
+    background-color: green;
+}
+
+.green-text {
+    color: green !important;
+}

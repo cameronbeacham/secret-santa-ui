@@ -1,0 +1,54 @@
+<a *ngIf="eventId" [routerLink]="['/events', eventId ]"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to exchange</a>
+
+<loading-spinner [loading]="loading"></loading-spinner>
+<div *ngIf="!loading">
+    <h3>Add Participant</h3>
+    <form>
+        <div class="form-group">
+          <label for="name">Participant Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="participant.name" name="name" placeholder="Enter participant name">
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="phone" class="form-control" [(ngModel)]="participant.phoneNumber" name="phoneNumber" id="phoneNumber" placeholder="(843) 555-5555">
+        </div>
+        <div class="form-group">
+            <label for="giftIdeas">Gift Ideas</label>
+            <textarea class="form-control" [(ngModel)]="participant.giftIdeas" id="giftIdeas" name="giftIdeas" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="giftLinks">Gift Links</label>
+            <div class="container">
+                <div class="row">
+                    <input class="form-control col-9" [(ngModel)]="newGiftLink" id="giftLinks" name="giftLinks" placeholder="https://google.com">
+                    <a class="btn btn-success ml-2" (click)="addGiftLink()" b>Add</a>
+                </div>
+            </div>
+            <div *ngIf="participant.giftLinks && participant.giftLinks.length > 0">
+                <div *ngFor="let link of participant.giftLinks" class="giftLink mt-2">
+                    <a href="{{link}}">{{link}}</a>
+                    <a (click)="removeGiftLink(link)"><i class="fa fa-minus-square ml-2" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="form-group container">
+            <label for="restrictions">Match Restrictions</label>
+            <form class="row">
+                <select class="form-control col-9" [(ngModel)]="newRestriction" name="newRestriction" id="restrictions">
+                    <option *ngFor="let res of availableRestrictions" value="{{res.id}}">{{res.name}}</option>
+                </select>
+                <button class="btn btn-success ml-2" (click)="addRestriction(newRestriction)">Add</button>
+            </form>
+          </div>
+          <ul class="list-group">
+            <li *ngFor="let res of currentRestrictions" 
+                class="list-group-item d-flex justify-content-between align-items-center restrictions">
+                {{res.name}}
+                <a class="btn btn-default restriction-delete" (click)="removeRestriction(res.id)">
+                    <i class="fa fa-minus-square" aria-hidden="true"></i>
+                </a>
+            </li>
+            </ul>
+        <button type="submit" (click)="saveEvent()" class="btn btn-primary mt-3">Save</button>
+    </form>
+</div>

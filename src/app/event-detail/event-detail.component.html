@@ -1,0 +1,53 @@
+<a [routerLink]="['']"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to all exchanges</a>
+
+<loading-spinner [loading]="loading"></loading-spinner>
+<div *ngIf="!loading">
+    <div class="card w-100" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">{{event.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{event.giftDate | date : 'MMM dd \'at\' h:hh a'}}</h6>
+        <p class="card-text">The gift dollar limit is {{event.giftDollarLimit | currency : USD}}.</p>
+        <a class="btn btn-success mr-2" [routerLink]="['/events', 'add-edit']" [queryParams]="{ 'eventId': event.id }"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+    </div>
+    </div>
+    
+    <h3 class="mt-2 mb-2">Participants ({{participants.length}})
+        <a class="btn btn-success" [routerLink]="['/participants', 'add-edit']" [queryParams]="{ 'eventId': event.id }">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+        </a>
+    </h3>
+    <ul class="list-group w-100">
+        <a *ngFor="let participant of participants" 
+            class="list-group-item list-group-item-action"
+            [routerLink]="['/participants', participant.id]"
+        >{{participant.name}}</a>
+    </ul>
+
+    <ul class="nav nav-pills nav-justified mt-3 mb-3">
+        <li class="nav-item">
+          <a class="nav-link btn-primary" (click)="generateMatches()"><i class="fa fa-cog" aria-hidden="true"></i> Generate Matches</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Modal -->
+<div *ngIf="!loading" class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Exchange</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete the '{{event.name}}' exchange?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="deleteEvent()" data-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>

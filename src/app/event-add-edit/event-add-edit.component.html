@@ -1,0 +1,26 @@
+<a *ngIf="!eventId" [routerLink]="['']"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to all exchanges</a>
+<a *ngIf="eventId" [routerLink]="['/events', eventId ]"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to exchange</a>
+
+<loading-spinner [loading]="loading"></loading-spinner>
+<div *ngIf="!loading">
+    <h3>Create Gift Exchange</h3>
+    <form>
+        <div class="form-group">
+          <label for="name">Gift Exchange Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="event.name" name="name" placeholder="Enter gift exchange name">
+        </div>
+        <div class="form-group">
+          <label for="giftDollarLimit">Gift Dollar Limit</label>
+          <input type="number" class="form-control" [(ngModel)]="event.giftDollarLimit" name="giftDollarLimit" id="giftDollarLimit" placeholder="25">
+        </div>
+        <div class="form-group">
+            <label for="giftDate">Gift Exchange Date</label>
+            <input type="datetime-local" class="form-control" [ngModel]="event.giftDate | date: 'yyyy-MM-ddTHH:mm:ss'" (ngModelChange)="event.giftDate=$event" name="giftDate" id="giftDate" placeholder="25">
+          </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" [(ngModel)]="event.disableReply" name="disableReply" id="disableReply">
+          <label class="form-check-label" for="disableReply">Disable Replies</label>
+        </div>
+        <button type="submit" (click)="saveEvent()" class="btn btn-primary mt-3">Save</button>
+    </form>
+</div>

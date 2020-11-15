@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { SecretSantaApiService } from './shared/secret-santa-api.service';
+import { SecretSantaEvent } from './shared/models/event.model';
 
 @Component({
   selector: 'app-root',

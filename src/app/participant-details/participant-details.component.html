@@ -1,0 +1,50 @@
+<loading-spinner [loading]="loading"></loading-spinner>
+<div *ngIf="!loading">
+    <a [routerLink]="['/events', participant.eventId]"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to exchange</a>
+    <div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{participant.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{participant.phoneNumber}}</h6>
+        <div class="mb-2">
+            <h6 class="card-text">Gift Ideas:</h6>
+            <span class="green-text">{{participant.giftIdeas}}</span>
+        </div>
+        <div *ngIf="participant.giftLinks && participant.giftLinks.length > 0" class="mb-3">
+            <h6>Links:</h6>
+            <a class="giftLinkDisplay" *ngFor="let link of participant.giftLinks" href="{{link}}">{{link}}</a>
+        </div>
+        <a class="btn btn-success mr-2" [routerLink]="['/participants', 'add-edit']" [queryParams]="{ 'participantId': participant.id }"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</a>
+        <a class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirm"><i class="fa fa-trash" aria-hidden="true"></i> Delete</a>
+    </div>
+    </div>
+
+    <span *ngIf="restrictions" class="card-text">
+        <h5 class="mt-3">Restrictions</h5>
+        <ul>
+            <li *ngFor="let restriction of restrictions">
+                {{restriction.name}}
+            </li>
+        </ul>
+    </span>
+</div>
+
+<!-- Modal -->
+<div *ngIf="!loading" class="modal fade" id="deleteConfirm" tabindex="-1" role="dialog" aria-labelledby="deleteConfirm" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Participant</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to remove '{{participant.name}}'?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="deleteParticipant()" data-dismiss="modal">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
