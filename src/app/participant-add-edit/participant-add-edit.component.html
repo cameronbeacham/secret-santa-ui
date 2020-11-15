@@ -35,6 +35,7 @@
             <label for="restrictions">Match Restrictions</label>
             <form class="row">
                 <select class="form-control col-9" [(ngModel)]="newRestriction" name="newRestriction" id="restrictions">
+                    <option selected value="">-</option>
                     <option *ngFor="let res of availableRestrictions" value="{{res.id}}">{{res.name}}</option>
                 </select>
                 <button class="btn btn-success ml-2" (click)="addRestriction()">Add</button>

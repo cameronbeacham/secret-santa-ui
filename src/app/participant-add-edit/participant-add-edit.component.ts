@@ -78,9 +78,16 @@ export class ParticipantAddEditComponent {
    }
 
    addRestriction() {
-     if (!(this.currentRestrictions && this.currentRestrictions.length > 0) || this.currentRestrictions.find(r => r.id !== this.newRestriction)) {
-      this.currentRestrictions.push(this.availableRestrictions.find(p => p.id == this.newRestriction))
-      this.participant.restrictions.push(this.newRestriction);
+     if (this.newRestriction) {
+      if (!(this.currentRestrictions && this.currentRestrictions.length > 0) || this.currentRestrictions.find(r => r.id !== this.newRestriction)) {
+        this.currentRestrictions.push(this.availableRestrictions.find(p => p.id == this.newRestriction))
+        if (this.participant.restrictions) {
+          this.participant.restrictions.push(this.newRestriction);
+        }
+        else {
+          this.participant.restrictions = [ this.newRestriction ];
+        }
+       }
      }
    }
 
