@@ -6,6 +6,10 @@ const app = express();
 app.use(express.static(__dirname + '/dist/secret-santa-ui'));
 
 // Send all requests to index.html
+app.get('/', function(req, res) {
+    res.redirect('/secret-santa');
+  });
+
 app.get('/secret-santa/*', function(req, res) {
   res.sendFile(path.join(__dirname + '/dist/secret-santa-ui/index.html'));
 });
