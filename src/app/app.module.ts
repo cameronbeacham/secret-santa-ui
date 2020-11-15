@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { ParticipantAddEditComponent } from './participant-add-edit/participant-add-edit.component';
 import { MatchesGeneratedComponent } from './matches-generated/matches-generated.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,

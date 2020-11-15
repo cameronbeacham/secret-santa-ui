@@ -33,11 +33,11 @@ export class SecretSantaApiService {
   }
 
   getParticipants(eventId: string): Observable<SecretSantaParticipant[]> {
-    return this.http.get<SecretSantaParticipant[]>(`https://localhost:5001/secretsanta/events/${eventId}/participants`);
+    return this.http.get<SecretSantaParticipant[]>(`${this.baseUrl}/secretsanta/events/${eventId}/participants`);
   }
 
   getParticipantById(participantId: string): Observable<SecretSantaParticipant> {
-    return this.http.get<SecretSantaParticipant>(`https://localhost:5001/secretsanta/participants/${participantId}`);
+    return this.http.get<SecretSantaParticipant>(`${this.baseUrl}/secretsanta/participants/${participantId}`);
   }
 
   createParticipant(participant: SecretSantaParticipant): Observable<any> {
