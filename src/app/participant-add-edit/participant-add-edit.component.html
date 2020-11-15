@@ -37,7 +37,7 @@
                 <select class="form-control col-9" [(ngModel)]="newRestriction" name="newRestriction" id="restrictions">
                     <option *ngFor="let res of availableRestrictions" value="{{res.id}}">{{res.name}}</option>
                 </select>
-                <button class="btn btn-success ml-2" (click)="addRestriction(newRestriction)">Add</button>
+                <button class="btn btn-success ml-2" (click)="addRestriction()">Add</button>
             </form>
           </div>
           <ul class="list-group">
