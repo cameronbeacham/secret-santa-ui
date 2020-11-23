@@ -6,4 +6,10 @@ export interface SecretSantaParticipant {
     giftIdeas: string;
     giftLinks: string[];
     restrictions: string[];
+    linkedParticipants: SecretSantaLinkedParticipant[]
+}
+
+export interface SecretSantaLinkedParticipant {
+    name: string;
+    phoneNumber: string;
 }

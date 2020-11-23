@@ -3,9 +3,9 @@
 <loading-spinner [loading]="loading"></loading-spinner>
 <div *ngIf="!loading">
     <h3>Add Participant</h3>
-    <form>
+    <form class="add-edit-form">
         <div class="form-group">
-          <label for="name">Participant Name</label>
+          <label for="name">Name</label>
           <input type="text" class="form-control" id="name" [(ngModel)]="participant.name" name="name" placeholder="Enter participant name">
         </div>
         <div class="form-group">
@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label for="giftIdeas">Gift Ideas</label>
-            <textarea class="form-control" [(ngModel)]="participant.giftIdeas" id="giftIdeas" name="giftIdeas" rows="3"></textarea>
+            <textarea class="form-control" [(ngModel)]="participant.giftIdeas" id="giftIdeas" name="giftIdeas" placeholder="Gift categories or specific things" rows="3"></textarea>
         </div>
         <div class="form-group">
             <label for="giftLinks">Gift Links</label>
@@ -31,14 +31,14 @@
                 </div>
             </div>
         </div>
-        <div class="form-group container">
-            <label for="restrictions">Match Restrictions</label>
-            <form class="row">
-                <select class="form-control col-9" [(ngModel)]="newRestriction" name="newRestriction" id="restrictions">
+        <div class="form-group">
+            <label for="restrictions">Family Exclusions</label>
+            <form>
+                <select class="form-control" (focusout)="addRestriction()" [(ngModel)]="newRestriction" name="newRestriction" id="restrictions">
                     <option selected value="">-</option>
                     <option *ngFor="let res of availableRestrictions" value="{{res.id}}">{{res.name}}</option>
+                    <option value="new-restriction">Add new participant</option>
                 </select>
-                <button class="btn btn-success ml-2" (click)="addRestriction()">Add</button>
             </form>
           </div>
           <ul class="list-group">
@@ -50,6 +50,39 @@
                 </a>
             </li>
             </ul>
-        <button type="submit" (click)="saveEvent()" class="btn btn-primary mt-3">Save</button>
+        <nav class="navbar fixed-bottom navbar-light bg-light">
+            <button type="submit" (click)="saveEvent()" class="btn btn-lg btn-block btn-primary">Save</button>
+        </nav>
     </form>
 </div>
+
+<a class="btn btn-danger hidden" data-toggle="modal" data-target="#addLinkedParticipant"><i class="fa fa-trash" aria-hidden="true"></i>Load Modal</a>
+<!-- Modal -->
+<div *ngIf="!loading" class="modal fade" id="addLinkedParticipant" tabindex="-1" role="dialog" aria-labelledby="addLinkedParticipant" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Participant to Exclude</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cancel">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="linkedName" [(ngModel)]="newLinkedParticipant.name" name="name" placeholder="Enter participant name">
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="phone" class="form-control" [(ngModel)]="newLinkedParticipant.phoneNumber" name="phoneNumber" id="linkedPhoneNumber" placeholder="(843) 555-5555">
+              </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" (click)="addParticipantAndLink()" data-dismiss="modal">Add Participant and Link</button>
+        </div>
+      </div>
+    </div>
+  </div>

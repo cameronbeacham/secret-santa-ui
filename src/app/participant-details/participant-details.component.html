@@ -5,7 +5,7 @@
     <div class="card-body">
         <h5 class="card-title">{{participant.name}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{participant.phoneNumber}}</h6>
-        <div class="mb-2">
+        <div *ngIf="participant.giftIdeas" class="mb-2">
             <h6 class="card-text">Gift Ideas:</h6>
             <span class="green-text">{{participant.giftIdeas}}</span>
         </div>
@@ -19,7 +19,7 @@
     </div>
 
     <span *ngIf="restrictions" class="card-text">
-        <h5 class="mt-3">Restrictions</h5>
+        <h5 class="mt-3">Family Exclusions</h5>
         <ul>
             <li *ngFor="let restriction of restrictions">
                 {{restriction.name}}

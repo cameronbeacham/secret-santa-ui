@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { SecretSantaParticipant } from '../shared/models/participant.model';
 import { SecretSantaApiService } from '../shared/secret-santa-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, forkJoin } from 'rxjs';
-import { debug } from 'util';
+
+declare var $: any;
 
 @Component({
   selector: 'app-participant-add-edit',
@@ -11,11 +11,11 @@ import { debug } from 'util';
   styleUrls: ['./participant-add-edit.component.scss']
 })
 export class ParticipantAddEditComponent {
-
   public loading: boolean;
   public eventId: string;
   public participantId: string;
   public participant: SecretSantaParticipant;
+  public newLinkedParticipant: SecretSantaParticipant;
   public currentRestrictions: SecretSantaParticipant[];
   public availableRestrictions: SecretSantaParticipant[];
   public newRestriction: string;
@@ -28,6 +28,7 @@ export class ParticipantAddEditComponent {
     route.queryParams.subscribe(params => {
       this.participantId = params['participantId'];
       this.eventId = params['eventId'];
+      this.newLinkedParticipant = {} as SecretSantaParticipant;
 
       if (this.participantId) {
         secretSantaService.getParticipantById(this.participantId).subscribe(p => {
@@ -54,8 +55,8 @@ export class ParticipantAddEditComponent {
         let index = this.availableRestrictions.findIndex(p => p.id === this.participantId);
         this.availableRestrictions.splice(index, 1);
       }
-      this.loading = false;
       this.getRestrictions();
+      this.loading = false;
     });
    }
 
@@ -79,7 +80,13 @@ export class ParticipantAddEditComponent {
 
    addRestriction() {
      if (this.newRestriction) {
-      if (!(this.currentRestrictions && this.currentRestrictions.length > 0) || this.currentRestrictions.find(r => r.id !== this.newRestriction)) {
+      if (this.newRestriction === 'new-restriction') {
+        this.newLinkedParticipant = {
+          eventId: this.eventId
+        } as SecretSantaParticipant;
+        $("#addLinkedParticipant").modal('show');
+      }
+      else if (!(this.currentRestrictions && this.currentRestrictions.length > 0) || this.currentRestrictions.find(r => r.id !== this.newRestriction)) {
         this.currentRestrictions.push(this.availableRestrictions.find(p => p.id == this.newRestriction))
         if (this.participant.restrictions) {
           this.participant.restrictions.push(this.newRestriction);
@@ -107,6 +114,14 @@ export class ParticipantAddEditComponent {
          this.participant.giftLinks.splice(index, 1);
        }
      }
+   }
+
+   addParticipantAndLink() {
+     if (!this.participant.linkedParticipants) {
+       this.participant.linkedParticipants = [];
+     }
+     this.participant.linkedParticipants.push(this.newLinkedParticipant);
+     this.currentRestrictions.push(this.newLinkedParticipant as SecretSantaParticipant);
    }
 
    saveEvent() {
