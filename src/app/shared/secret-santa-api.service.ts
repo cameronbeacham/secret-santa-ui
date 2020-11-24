@@ -32,6 +32,10 @@ export class SecretSantaApiService {
     return this.http.delete(`${this.baseUrl}/secretsanta/events/${eventId}`);
   }
 
+  resendMatch(participantId: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/secretsanta/participants/${participantId}/resendmatch`, undefined);
+  }
+
   getParticipants(eventId: string): Observable<SecretSantaParticipant[]> {
     return this.http.get<SecretSantaParticipant[]>(`${this.baseUrl}/secretsanta/events/${eventId}/participants`);
   }

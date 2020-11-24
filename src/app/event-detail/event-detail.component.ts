@@ -4,7 +4,6 @@ import { SecretSantaApiService } from '../shared/secret-santa-api.service';
 import { SecretSantaEvent } from '../shared/models/event.model';
 import { forkJoin } from 'rxjs';
 import { SecretSantaParticipant } from '../shared/models/participant.model';
-import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-event-detail',
@@ -40,12 +39,6 @@ export class EventDetailComponent {
   deleteEvent() {
     this.secretSantaService.deleteEvent(this.eventId).subscribe(res => {
       this.router.navigate(['']);
-    })
-  }
-
-  generateMatches() {
-    this.secretSantaService.generateMatches(this.eventId).subscribe(res => {
-      this.router.navigate(['/matches-generated'], { queryParams: { 'eventId': this.event.id, 'eventName': this.event.name }});
     })
   }
 }

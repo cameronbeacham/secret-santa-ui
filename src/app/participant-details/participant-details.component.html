@@ -1,7 +1,7 @@
 <loading-spinner [loading]="loading"></loading-spinner>
 <div *ngIf="!loading">
     <a [routerLink]="['/events', participant.eventId]"><i class="fa fa-arrow-left pt-3 pb-3" aria-hidden="true"></i> Back to exchange</a>
-    <div class="card">
+    <div class="card mb-3">
     <div class="card-body">
         <h5 class="card-title">{{participant.name}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{participant.phoneNumber}}</h6>
@@ -19,13 +19,27 @@
     </div>
 
     <span *ngIf="restrictions" class="card-text">
-        <h5 class="mt-3">Family Exclusions</h5>
+        <h5 class="mb-3">Family Exclusions</h5>
         <ul>
             <li *ngFor="let restriction of restrictions">
                 {{restriction.name}}
             </li>
         </ul>
     </span>
+
+    <loading-spinner [loading]="resendLoading"></loading-spinner>
+    <div *ngIf="successfullyResent" id="myToast" class="toast mb-3" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="mr-auto green-text">Resend Successful</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Resend successful, you should get a text at {{participant.phoneNumber}} soon.
+      </div>
+    </div>
+    <a *ngIf="matchesSent" class="btn btn-primary" (click)="resendMatch()"><i class="fa fa-repeat" aria-hidden="true"></i> Resend Match</a>
 </div>
 
 <!-- Modal -->

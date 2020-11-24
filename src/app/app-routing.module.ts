@@ -6,7 +6,7 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
 import { ParticipantDetailsComponent } from './participant-details/participant-details.component';
 import { EventAddEditComponent } from './event-add-edit/event-add-edit.component';
 import { ParticipantAddEditComponent } from './participant-add-edit/participant-add-edit.component';
-import { MatchesGeneratedComponent } from './matches-generated/matches-generated.component';
+import { GenerateMatchesComponent } from './generate-matches/generate-matches.component';
 
 
 const routes: Routes = [
@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'events/:id', component: EventDetailComponent },
   { path: 'participants/add-edit', component: ParticipantAddEditComponent },
   { path: 'participants/:id', component: ParticipantDetailsComponent },
-  { path: 'matches-generated', component: MatchesGeneratedComponent },
+  { path: 'events/:id/generate-matches', component: GenerateMatchesComponent },
   { path: 'not-found', component: PageNotFoundComponent },
   { path: '**', redirectTo: '/not-found', pathMatch: 'full' }
 ];

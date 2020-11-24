@@ -1,0 +1,22 @@
+<a *ngIf="eventId" [routerLink]="['/events', eventId ]"><i class="fa fa-arrow-left pt-3" aria-hidden="true"></i> Back to exchange</a>
+
+<loading-spinner [loading]="loading"></loading-spinner>
+<ul *ngIf="!loading" class="nav nav-pills nav-justified mt-3 mb-3">
+    <img src="assets/santa-bag.png" alt="Santa with bag" class="santa-bag mb-4 p-2">
+    <li class="nav-item">
+      <a class="nav-link btn-primary" (click)="generateMatches()"><i class="fa fa-cog" aria-hidden="true"></i> Generate Matches</a>
+    </li>
+</ul>
+
+<loading-spinner [loading]="generateLoding"></loading-spinner>
+<div *ngIf="successfullyGenerated" id="myToast" class="toast mb-3" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="toast-header">
+    <strong class="mr-auto green-text">Generate Matches Successful</strong>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body">
+    Matches have been successfully generated for the {{event.name}} secret santa!
+  </div>
+</div>

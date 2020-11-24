@@ -3,6 +3,9 @@ import { SecretSantaApiService } from '../shared/secret-santa-api.service';
 import { SecretSantaParticipant } from '../shared/models/participant.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, forkJoin } from 'rxjs';
+import { SecretSantaEvent } from '../shared/models/event.model';
+
+declare var $: any;
 
 @Component({
   selector: 'participant-details',
@@ -14,6 +17,10 @@ export class ParticipantDetailsComponent {
   public restrictions: SecretSantaParticipant[];
   public participantId: string;
   public loading: boolean;
+  public matchesSent: boolean;
+  public successfullyResent: boolean;
+  public resendLoading: boolean;
+  public event: SecretSantaEvent;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -25,20 +32,36 @@ export class ParticipantDetailsComponent {
 
       this.secretSantaService.getParticipantById(this.participantId).subscribe((res) => {
         this.participant = res;
-        if (this.participant.restrictions.length > 0) {
-          let restrictionsObs: Observable<SecretSantaParticipant>[] = [];
-          this.participant.restrictions.forEach((restriction) => {
-            let participant: Observable<SecretSantaParticipant> = this.secretSantaService.getParticipantById(restriction);
-            restrictionsObs.push(participant);
-          });
-          forkJoin(restrictionsObs).subscribe((restrictions) => {
-            this.restrictions = restrictions;
+
+        this.secretSantaService.getEventById(this.participant.eventId).subscribe((evt) => {
+          this.matchesSent = evt.matchesGenerated;
+          if (this.participant.restrictions.length > 0) {
+            let restrictionsObs: Observable<SecretSantaParticipant>[] = [];
+            this.participant.restrictions.forEach((restriction) => {
+              let participant: Observable<SecretSantaParticipant> = this.secretSantaService.getParticipantById(restriction);
+              restrictionsObs.push(participant);
+            });
+            forkJoin(restrictionsObs).subscribe((restrictions) => {
+              this.restrictions = restrictions;
+              this.loading = false;
+            });
+          }
+          else {
             this.loading = false;
-          });
-        }
-        else {
-          this.loading = false;
-        }
+          }
+        })
+        
+      });
+    }
+
+    public resendMatch() {
+      this.resendLoading = true;
+      this.secretSantaService.resendMatch(this.participantId).subscribe((res) => {
+        this.successfullyResent = true;
+        $(document).ready(function(){
+          $("#myToast").toast('show');
+        });
+        this.resendLoading = false;
       });
     }
 

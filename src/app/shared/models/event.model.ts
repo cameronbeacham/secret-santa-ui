@@ -5,4 +5,5 @@ export interface SecretSantaEvent {
     giftDate: Date;
     secretSantaPhoneNumber: string;
     disableReply: any;
+    matchesGenerated: boolean;
 }
