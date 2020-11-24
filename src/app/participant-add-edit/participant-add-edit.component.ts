@@ -85,6 +85,7 @@ export class ParticipantAddEditComponent {
           eventId: this.eventId
         } as SecretSantaParticipant;
         $("#addLinkedParticipant").modal('show');
+        $("#restrictions").val('');
       }
       else if (!(this.currentRestrictions && this.currentRestrictions.length > 0) || this.currentRestrictions.find(r => r.id !== this.newRestriction)) {
         this.currentRestrictions.push(this.availableRestrictions.find(p => p.id == this.newRestriction))
