@@ -28,7 +28,9 @@ export class EventAddEditComponent {
         })
       }
       else {
-        this.event = {} as SecretSantaEvent;
+        this.event = {
+          disableReply: true
+        } as SecretSantaEvent;
         this.loading = false;
       }
     })

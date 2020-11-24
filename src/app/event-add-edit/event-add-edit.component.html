@@ -17,10 +17,6 @@
             <label for="giftDate">Gift Exchange Date</label>
             <input type="datetime-local" class="form-control" [ngModel]="event.giftDate | date: 'yyyy-MM-ddTHH:mm:ss'" (ngModelChange)="event.giftDate=$event" name="giftDate" id="giftDate" placeholder="25">
           </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" [(ngModel)]="event.disableReply" name="disableReply" id="disableReply">
-          <label class="form-check-label" for="disableReply">Disable Replies</label>
-        </div>
         <button type="submit" (click)="saveEvent()" class="btn btn-primary mt-3">Save</button>
     </form>
 </div>
